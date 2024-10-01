@@ -1,0 +1,22 @@
+body {
+  background-color: #272838;
+}
+
+.nav {
+  background-color: #d6e3f8;
+  color: #272838;
+}
+
+.leftcontainer {
+  padding: 5px;
+}
+
+.logoimg {
+  width: 5%;
+  margin-left: -5px;
+  content: url(../images/dmlogo.png);
+}
+
+.rightcontainer a {
+  color: #272838;
+}

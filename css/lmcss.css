@@ -1,17 +1,10 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
   background-color: #d6e3f8;
 }
 
 .nav {
-  height: 60px;
-  width: 100%;
   background-color: #272838;
+  color: #d6e3f8;
 }
 
 .leftcontainer {
@@ -19,8 +12,11 @@ body {
 }
 
 .logoimg {
-  width: 8%;
-  height: 8%;
-  margin-top: -32px;
+  width: 5%;
   margin-left: -5px;
+  content: url(../images/lmlogo.png);
+}
+
+.rightcontainer a {
+  color: #d6e3f8;
 }
