@@ -1,10 +1,10 @@
 body {
-  background-color: #272838;
+  background-color: #211A1D;
 }
 
 .nav {
   background-color: #d6e3f8;
-  color: #272838;
+  color: #211A1D;
 }
 
 .leftcontainer {
@@ -12,11 +12,38 @@ body {
 }
 
 .logoimg {
-  width: 5%;
+  width: 50px;
   margin-left: -5px;
   content: url(../images/dmlogo.png);
 }
 
 .rightcontainer a {
-  color: #272838;
+  color: #211A1D;
+}
+
+.animetitle {
+  color: #d6e3f8;
+  padding-left: 12px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.item-title {
+  margin-top: 10px; /* Space between item content and title */
+  color: #d6e3f8; /* Change text color for better visibility */
+  overflow: hidden; /* Hide overflow text */
+  text-overflow: ellipsis; /* Add ellipsis for overflow text */
+  white-space: nowrap; /* Prevent text from wrapping to the next line */
+  max-width: 90%; /* Ensure it doesn’t exceed the container width */
+}
+
+.mixcont {
+  background-color: #211A1D;
+  height: fit-content;
+  width: 100%; /* Full width of the parent */
+  border-radius: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  max-width: 1200px; /* Optional: set a max width */
 }

@@ -11,6 +11,14 @@
   display: flex;
   justify-content: space-between;
   padding: 10px 20px;
+  z-index: 1000; /* Ensure it stays above other elements */
+  position: fixed; /* Keep the navbar fixed */
+  top: 0; /* Position it at the top */
+  font-size: 14px;
+}
+
+.scrollable {
+  overflow-y: scroll;
 }
 
 .leftcontainer a,
@@ -58,4 +66,139 @@
   display: flex; /* Center content */
   align-items: center; /* Center vertically */
   justify-content: center; /* Center horizontally */
+}
+
+.headtext {
+  color: #aa4465;
+  font-weight: 600;
+  padding-left: 25px;
+  padding-top: 25px;
+  text-align: left; /* Ensure the title is left aligned */
+}
+
+.main-content {
+  position: relative;
+  padding-left: 25px;
+  padding-top: 22px;
+  padding-right: 25px;
+  .owl-theme {
+    .custom-nav {
+      position: absolute;
+      top: 32%;
+      left: 0;
+      right: 0;
+
+      .owl-prev,
+      .owl-next {
+        position: absolute;
+        height: 100px;
+        color: inherit;
+        background: none;
+        border: none;
+        z-index: 100;
+
+        i {
+          font-size: 2rem;
+          color: #5c946e;
+        }
+      }
+
+      .owl-prev {
+        left: -8px;
+      }
+
+      .owl-next {
+        right: -8px;
+      }
+    }
+  }
+  .owl-theme .owl-nav [class*="owl-"]:hover {
+    text-decoration: none;
+    background: none;
+  }
+}
+
+.item-content {
+  width: 206.5px; /* Desired width */
+  height: 300px; /* Desired height */
+  background-color: #aa4465; /* Example background color */
+}
+
+.item-title:hover {
+  color: #aa4465;
+  cursor: pointer;
+}
+
+.owl-item {
+  width: 206.5px !important; /* Set desired width */
+  margin-right: 10px !important; /* Ensure spacing */
+}
+
+
+.mixcon {
+  width: 100%;
+  padding: 25px;
+  padding-top: 70px;
+  padding-bottom: 80px;
+  display: flex; /* Use flexbox for alignment */
+  justify-content: center; /* Center content horizontally */
+}
+
+.totcont {
+  display: flex; /* Use flexbox to display children in a row */
+  justify-content: flex-start; /* Align items to the start */
+  flex-wrap: wrap; /* Allow wrapping to the next line */
+}
+
+.cont {
+  padding: 10px; /* Adjusted padding */
+  width: 300px; /* Fixed width for each category */
+}
+
+.animeclass {
+  text-align: left; /* Align title to the left */
+  margin-bottom: 10px; /* Space below the title */
+}
+
+.animecont {
+  display: flex;
+  padding-left: 25px;
+  padding-top: 20px;
+  align-items: center; /* Center items vertically */
+}
+
+.animecont .animeimg {
+  height: 90px;
+  width: 70px;
+  background-color: #aa4465;
+  flex-shrink: 0;
+  display: block;
+}
+
+.viewstxt {
+  color: #375540;
+  font-size: 12px;
+  padding-left: 12px;
+}
+
+.likestxt {
+  color: #de9151;
+  font-size: 12px;
+  padding-left: 12px;
+}
+
+.viewmore{
+  padding-left: 25px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.viewmore a{
+  color: #aa4465;
+  text-decoration: none;
+}
+
+.animetitle:hover{
+  color: #aa4465;
+  cursor: pointer;
 }

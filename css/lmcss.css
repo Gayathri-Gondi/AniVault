@@ -3,7 +3,7 @@ body {
 }
 
 .nav {
-  background-color: #272838;
+  background-color: #211a1d;
   color: #d6e3f8;
 }
 
@@ -12,11 +12,75 @@ body {
 }
 
 .logoimg {
-  width: 5%;
+  width: 50px;
   margin-left: -5px;
   content: url(../images/lmlogo.png);
 }
 
 .rightcontainer a {
   color: #d6e3f8;
+}
+
+.animetitle {
+  color: #211a1d;
+  padding-left: 12px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.item-title {
+  margin-top: 10px; /* Space between item content and title */
+  color: #211a1d; /* Change text color for better visibility */
+  overflow: hidden; /* Hide overflow text */
+  text-overflow: ellipsis; /* Add ellipsis for overflow text */
+  white-space: nowrap; /* Prevent text from wrapping to the next line */
+  max-width: 90%; /* Ensure it doesn’t exceed the container width */
+}
+
+.mixcont {
+  background-color: #d6e3f8;
+  height: fit-content;
+  width: 100%; /* Full width of the parent */
+  border-radius: 20px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  max-width: 1200px; /* Optional: set a max width */
+}
+
+.footer {
+  height: 300px;
+  background-color: #211a1d;
+}
+
+.flogoimg {
+  width: 180px;
+  margin-left: 95px;
+  content: url(../images/lmlogo.png);
+  padding-top: 30px;
+}
+
+.hline{
+  width: 90%; /* Set the width to 90% */
+    border: 0; /* Remove default border */
+    border-top: 1px solid #ccc; /* Add a solid line with color */
+    margin: 20px auto; /* Center the line horizontally with some margin */
+}
+
+.footer .bottom{
+  margin-left: 75px;
+  display: inline-flex;
+}
+
+.wbtitle{
+  color: #d6e3f8;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.vline{
+  width: 2px; /* Width of the vertical line */
+    height: 30px; /* Height of the vertical line */
+    background-color: #ccc; /* Color of the line */
+    margin:  auto; /* Center the line vertically with some margin */
 }
