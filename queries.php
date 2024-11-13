@@ -1,135 +1,209 @@
 <?php
-function fetchAniListData($query)
+
+function getSeasonsAndYears()
 {
-  // Set the URL for the AniList GraphQL endpoint
-  $url = "https://graphql.anilist.co";
+    $month = date('n'); // Numeric representation of a month (1 to 12)
+    $currentYear = date('Y'); // Current year
 
-  // Initialize cURL session
-  $ch = curl_init($url);
+    // Define an array for seasons
+    $seasons = ['WINTER', 'SPRING', 'SUMMER', 'FALL'];
 
-  // Set options
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-  curl_setopt($ch, CURLOPT_POST, true);
-  curl_setopt($ch, CURLOPT_HTTPHEADER, [
-    'Content-Type: application/json',
-  ]);
-  curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(['query' => $query]));
+    // Determine the current season index
+    if ($month >= 3 && $month <= 5) {
+        $currentSeasonIndex = 1; // SPRING
+    } elseif ($month >= 6 && $month <= 8) {
+        $currentSeasonIndex = 2; // SUMMER
+    } elseif ($month >= 9 && $month <= 11) {
+        $currentSeasonIndex = 3; // FALL
+    } else {
+        $currentSeasonIndex = 0; // WINTER
+    }
 
-  // Execute the request
-  $response = curl_exec($ch);
+    // Get current, previous, and next seasons
+    $currentSeason = $seasons[$currentSeasonIndex];
+    $previousSeason = $seasons[($currentSeasonIndex - 1 + 4) % 4];
+    $nextSeason = $seasons[($currentSeasonIndex + 1) % 4];
 
-  // Check for cURL errors
-  if (curl_errno($ch)) {
-    echo 'Error:' . curl_error($ch);
-    return null;
-  }
+    // Determine the year for each season
+    $previousYear = $currentYear;
+    $nextYear = $currentYear;
 
-  // Decode the JSON response
-  $data = json_decode($response, true);
+    if ($currentSeasonIndex === 0) { // If current is WINTER
+        $previousYear--; // Previous season is FALL of the previous year
+    } elseif ($currentSeasonIndex === 1) { // If current is SPRING
+        $previousYear--; // Previous season is WINTER of the previous year
+    }
 
-  // Close the cURL session
-  curl_close($ch);
+    if ($currentSeasonIndex === 3) { // If current is FALL
+        $nextYear++; // Next season is WINTER of the next year
+    }
 
-  return $data;
+    // Return seasons and years separately
+    return [
+        'currentSeason' => $currentSeason,
+        'currentYear' => $currentYear,
+        'previousSeason' => $previousSeason,
+        'previousYear' => $previousYear,
+        'nextSeason' => $nextSeason,
+        'nextYear' => $nextYear,
+    ];
 }
 
-// Function to display anime data
-function displayAnime($animeList)
-{
-  foreach ($animeList as $anime) {
-    // Accessing properties; adjust as per your API response structure
-    $title = $anime['title']['romaji'] ?? 'Unknown Title';
-    $coverImage = $anime['coverImage']['large'] ?? 'default.jpg'; // Use a default image if none available
-    $averageScore = $anime['averageScore'] ?? 'N/A';
+// Example usage
+$seasonsData = getSeasonsAndYears();
 
-    echo '<div class="anime-cont">';
-    echo '<img src="' . htmlspecialchars($coverImage) . '" alt="' . htmlspecialchars($title) . '">';
-    echo '<h2>' . htmlspecialchars($title) . '</h2>';
-    echo '<p>Score: ' . htmlspecialchars($averageScore) . '</p>';
-    echo '</div>';
-  }
-}
-
+$currentSeason = $seasonsData['currentSeason'];
+$currentYear = $seasonsData['currentYear'];
+$previousSeason = $seasonsData['previousSeason'];
+$previousYear = $seasonsData['previousYear'];
+$nextSeason = $seasonsData['nextSeason'];
+$nextYear = $seasonsData['nextYear'];
 
 // Define queries for different categories
 $popularQuery = '
 {
-  Page {
-    media(sort: POPULARITY_DESC) {
-      id
-      title {
-        romaji
-      }
-      coverImage {
-        medium
-      }
-      averageScore
+    Page {
+        media(sort: POPULARITY_DESC) {
+            id
+            title {
+                romaji
+            }
+            coverImage {
+                extraLarge
+            }
+            bannerImage
+            averageScore
+            favourites
+        }
     }
-  }
 }';
 
 $topRatedQuery = '
 {
-  Page {
-    media(sort: SCORE_DESC) {
-      id
-      title {
-        romaji
-      }
-      coverImage {
-        medium
-      }
-      averageScore
+    Page {
+        media(sort: SCORE_DESC) {
+            id
+            title {
+                romaji
+            }
+            coverImage {
+                extraLarge
+            }
+            bannerImage
+            averageScore
+            favourites
+        }
     }
-  }
 }';
 
 $favoritesQuery = '
 {
+    Page {
+        media(sort: FAVOURITES_DESC) {
+            id
+            title {
+                romaji
+            }
+            coverImage {
+                extraLarge
+            }
+            bannerImage
+            averageScore
+            favourites
+        }
+    }
+}';
+
+// Recently completed anime query
+$recentlyCompletedQuery = '
+{
   Page {
-    media(sort: FAVOURITES_DESC) {
+    media(sort: POPULARITY_DESC, season:  ' . $previousSeason . ', seasonYear: ' . intval($previousYear) . ', status: FINISHED) {
       id
       title {
         romaji
       }
       coverImage {
-        medium
+        extraLarge
       }
+      bannerImage
       averageScore
+      favourites
+      episodes
+      description
+      startDate {
+        year
+        month
+        day
+      }
+      endDate {
+        year
+        month
+        day
+      }
     }
   }
 }';
 
-// Fetch and display different categories
-echo "<h1>Popular Anime</h1>";
-$popularData = fetchAniListData($popularQuery);
+$trendingnow = '
+{
+    Page {
+        media(status: RELEASING, sort: [TRENDING_DESC], type: ANIME) { 
+            id
+            title {
+                romaji
+                english
+                native
+            }
+            coverImage {
+                extraLarge
+            }
+            bannerImage
+            averageScore
+            favourites
+            trending
+        }
+    }
+}';
 
-// Check if the response has the media and is an array
-if (isset($popularData['data']['Page']['media']) && is_array($popularData['data']['Page']['media'])) {
-  // Get the media array
-  $animeList = $popularData['data']['Page']['media'];
+$upcominganime = '
+{
+    Page {
+        media(season:  ' . $nextSeason . ', seasonYear: ' . intval($nextYear) . ',  sort: [TRENDING_DESC], type: ANIME) { 
+            id
+            title {
+                romaji
+                english
+                native
+            }
+            coverImage {
+                extraLarge
+            }
+            bannerImage
+            averageScore
+            favourites
+            trending
+        }
+    }
+}';
 
-  // Limit the display to top 5
-  $topAnime = array_slice($animeList, 0, 5);
-
-  // Call displayAnime with the top 5 anime
-  displayAnime($topAnime);
-
-  // Link to view more
-  echo '<div><a href="view_more.php">View More...</a></div>';
-} else {
-  echo "<p>No anime data available.</p>";
-}
-
-
-echo "<h1>Top Rated Anime</h1>";
-$topRatedData = fetchAniListData($topRatedQuery);
-if ($topRatedData) {
-  displayAnime($topRatedData['data']['Page']['media']);
-}
-
-echo "<h1>Most Favorite Anime</h1>";
-$favoritesData = fetchAniListData($favoritesQuery);
-if ($favoritesData) {
-  displayAnime($favoritesData['data']['Page']['media']);
-}
+$popseasonnow = '
+{
+    Page {
+        media(season:  ' . $currentSeason . ', seasonYear: ' . intval($currentYear) . ',  sort: [TRENDING_DESC], type: ANIME) { 
+            id
+            title {
+                romaji
+                english
+                native
+            }
+            coverImage {
+                extraLarge
+            }
+            bannerImage
+            averageScore
+            favourites
+            trending
+        }
+    }
+}';

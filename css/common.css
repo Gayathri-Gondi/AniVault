@@ -1,204 +1,322 @@
+/* Global Styles */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+  margin: 0; /* Reset default margin */
+  padding: 0; /* Reset default padding */
+  box-sizing: border-box; /* Include padding and border in element's total width/height */
+  font-family: "Poppins", sans-serif; /* Set default font */
 }
 
+/* Navigation Bar Styles */
 .nav {
-  height: 60px;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  padding: 10px 20px;
+  height: 60px; /* Set height of navbar */
+  width: 100%; /* Full width */
+  display: flex; /* Use flexbox for alignment */
+  justify-content: space-between; /* Space between left and right containers */
+  padding: 10px 20px; /* Padding inside navbar */
   z-index: 1000; /* Ensure it stays above other elements */
-  position: fixed; /* Keep the navbar fixed */
-  top: 0; /* Position it at the top */
-  font-size: 14px;
+  position: fixed; /* Keep the navbar fixed at the top */
+  top: 0; /* Position it at the top of the viewport */
+  font-size: 14px; /* Font size for navbar text */
 }
 
-.scrollable {
-  overflow-y: scroll;
-}
-
+/* Link styles within left and right containers */
 .leftcontainer a,
 .rightcontainer a {
-  text-decoration: none;
-  margin-right: 25px;
+  text-decoration: none; /* Remove underline from links */
+  margin-right: 25px; /* Space between links */
 }
 
+/* Styles for left and right containers */
 .leftcontainer,
 .rightcontainer {
-  display: flex;
-  align-items: center;
+  display: flex; /* Use flexbox for alignment */
+  align-items: center; /* Center items vertically */
 }
 
+/* Styles for buttons */
 .subtn {
-  background-color: #aa4465;
-  padding: 5px 15px; /* Add padding for a button-like feel */
+  background-color: #aa4465; /* Button background color */
+  padding: 5px 15px; /* Padding for button-like feel */
   border-radius: 5px; /* Rounded corners */
-  width: max-content;
+  width: max-content; /* Adjust width to content */
 }
 
-.nav-link {
-  margin-left: 25px;
-}
-
+/* Carousel Styles */
 .carousel {
-  position: relative;
-  width: 100%;
-  height: 400px; /* Fixed height */
-  overflow: hidden;
+    position: relative; /* Relative positioning for inner elements */
+    width: 100%; /* Full width */
+    height: 450px; /* Fixed height */
+    overflow: hidden; /* Hide overflow content */
 }
 
 .carousel-container {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
+    display: flex; /* Use flexbox for items layout */
+    transition: transform 0.5s ease-in-out; /* Smooth transition for sliding */
 }
 
 .carousel-item {
-  min-width: 100%;
-  height: 400px; /* Match the height of the carousel */
-  box-sizing: border-box;
-  padding: 20px;
-  background-color: rgba(170, 68, 101, 0.4);
-  text-align: center;
-  display: flex; /* Center content */
-  align-items: center; /* Center vertically */
-  justify-content: center; /* Center horizontally */
+    min-width: 100%; /* Each item takes the full width of the carousel */
+    height: 450px; /* Match the height of the carousel */
+    box-sizing: border-box; /* Include padding/border in size calculations */
+    background-color: rgba(170, 68, 101, 0.4); /* Background color with transparency */
+    text-align: center; /* Center text */
+    display: flex; /* Use flexbox for centering */
+    align-items: center; /* Center content vertically */
+    justify-content: center; /* Center content horizontally */
+    position: relative; /* For positioning children */
 }
 
+/* Gradient overlay for carousel items */
+.carousel-item::after {
+  content: ''; /* Empty content for the pseudo-element */
+  position: absolute; /* Absolute positioning */
+  bottom: 0; /* Position at the bottom */
+  left: 0; /* Align to the left */
+  right: 0; /* Align to the right */
+  height: 70%; /* Height of the gradient overlay */
+  background: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0)); /* Gradient effect */
+  pointer-events: none; /* Prevent interaction with the overlay */
+  z-index: 1; /* Layering above background */
+}
+
+/* Carousel image styles */
+.carousel-img {
+    width: 100%; /* Make images responsive */
+    height: 450px; /* Maintain fixed height */
+    object-fit: cover; /* Cover container without distortion */
+}
+
+/* Carousel title styles */
+.carousel-title {
+    margin-top: 10px; /* Spacing between image and title */
+    font-size: 32px; /* Title font size */
+    color: #d6e3f8; /* Text color for better visibility */
+    position: absolute; /* Absolute positioning for control */
+    bottom: 20px; /* Position title above the bottom */
+    left: 50%; /* Center title horizontally */
+    transform: translateX(-50%); /* Adjust for centering */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7); /* Optional: Add shadow for better visibility */
+    z-index: 2; /* Layering above the gradient */
+}
+
+/* Hover effects for carousel items */
+.animecont:hover, .animecont:hover .animetitle, 
+.item:hover, .item:hover .item-title{
+  color: #aa4465; /* Change title color on hover */
+  cursor: pointer; /* Indicate clickable */
+}
+
+.carousel-item:hover, .carousel-item:hover .carousel-title {
+  cursor: pointer; /* Indicate clickable */
+}
+
+/* Main Content Styles */
 .headtext {
-  color: #aa4465;
-  font-weight: 600;
-  padding-left: 25px;
-  padding-top: 25px;
-  text-align: left; /* Ensure the title is left aligned */
+  color: #aa4465; /* Color for main heading */
+  font-weight: 600; /* Bold text */
+  padding-left: 25px; /* Left padding */
+  padding-top: 25px; /* Top padding */
+  text-align: left; /* Left align text */
 }
 
+/* Content padding and alignment */
 .main-content {
-  position: relative;
-  padding-left: 25px;
-  padding-top: 22px;
-  padding-right: 25px;
-  .owl-theme {
-    .custom-nav {
-      position: absolute;
-      top: 32%;
-      left: 0;
-      right: 0;
+  position: relative; /* Relative positioning for child elements */
+  padding-left: 25px; /* Left padding */
+  padding-top: 22px; /* Top padding */
+  padding-right: 25px; /* Right padding */
+}
 
-      .owl-prev,
-      .owl-next {
-        position: absolute;
-        height: 100px;
-        color: inherit;
-        background: none;
-        border: none;
-        z-index: 100;
+/* Owl Carousel Navigation */
+.owl-theme {
+  .custom-nav {
+    position: absolute; /* Absolute positioning */
+    top: 32%; /* Position vertically */
+    left: 0;
+    right: 0; /* Centered horizontally */
 
-        i {
-          font-size: 2rem;
-          color: #5c946e;
-        }
-      }
+    .owl-prev,
+    .owl-next {
+      position: absolute; /* Positioning for navigation buttons */
+      height: 100px; /* Button height */
+      color: inherit; /* Inherit text color */
+      background: none !important; /* No background */
+      border: none; /* No border */
+      z-index: 100; /* Ensure above other content */
 
-      .owl-prev {
-        left: -8px;
-      }
-
-      .owl-next {
-        right: -8px;
+      i {
+        font-size: 2rem; /* Icon size */
+        color: #5c946e; /* Icon color */
       }
     }
-  }
-  .owl-theme .owl-nav [class*="owl-"]:hover {
-    text-decoration: none;
-    background: none;
+
+    .owl-prev {
+      left: -8px; /* Position left */
+    }
+
+    .owl-next {
+      right: -8px; /* Position right */
+    }
   }
 }
 
+/* Hover effect for owl navigation items */
+.owl-theme .owl-nav [class*="owl-"]:hover {
+  text-decoration: none; /* No underline on hover */
+  background: none; /* No background on hover */
+}
+
+/* Item Content Styles */
 .item-content {
-  width: 206.5px; /* Desired width */
-  height: 300px; /* Desired height */
-  background-color: #aa4465; /* Example background color */
+  width: 206.5px; /* Fixed width for item */
+  height: 300px; /* Fixed height for item */
+  background-color: #aa4465; /* Background color */
 }
 
-.item-title:hover {
-  color: #aa4465;
-  cursor: pointer;
-}
-
+/* Owl Item Styles */
 .owl-item {
   width: 206.5px !important; /* Set desired width */
   margin-right: 10px !important; /* Ensure spacing */
 }
 
-
+/* Mixed Content Styles */
 .mixcon {
-  width: 100%;
-  padding: 25px;
-  padding-top: 70px;
-  padding-bottom: 80px;
+  width: 100%; /* Full width */
+  padding: 25px; /* Padding */
+  padding-top: 70px; /* Top padding */
+  padding-bottom: 80px; /* Bottom padding */
   display: flex; /* Use flexbox for alignment */
   justify-content: center; /* Center content horizontally */
 }
 
+/* Total Content Styles */
 .totcont {
   display: flex; /* Use flexbox to display children in a row */
   justify-content: flex-start; /* Align items to the start */
   flex-wrap: wrap; /* Allow wrapping to the next line */
 }
 
+/* Individual Container Styles */
 .cont {
-  padding: 10px; /* Adjusted padding */
+  padding: 10px; /* Padding around each category */
   width: 300px; /* Fixed width for each category */
 }
 
+/* Anime Class Title Styles */
 .animeclass {
   text-align: left; /* Align title to the left */
   margin-bottom: 10px; /* Space below the title */
 }
 
+/* Anime Container Styles */
 .animecont {
-  display: flex;
-  padding-left: 25px;
-  padding-top: 20px;
+  display: flex; /* Use flexbox for alignment */
+  padding-left: 25px; /* Left padding */
+  padding-top: 20px; /* Top padding */
   align-items: center; /* Center items vertically */
 }
 
+/* Anime Image Styles */
 .animecont .animeimg {
-  height: 90px;
-  width: 70px;
-  background-color: #aa4465;
-  flex-shrink: 0;
-  display: block;
+  height: 90px; /* Fixed height for anime images */
+  width: 70px; /* Fixed width for anime images */
+  background-color: #aa4465; /* Background color for placeholder */
+  flex-shrink: 0; /* Prevent shrinking */
+  display: block; /* Block element */
 }
 
+/* View Count Text Styles */
 .viewstxt {
-  color: #375540;
-  font-size: 12px;
-  padding-left: 12px;
+  color: #375540; /* Color for views text */
+  font-size: 12px; /* Font size */
+  padding-left: 12px; /* Left padding */
 }
 
+/* Likes Text Styles */
 .likestxt {
-  color: #de9151;
-  font-size: 12px;
-  padding-left: 12px;
+  color: #de9151; /* Color for likes text */
+  font-size: 12px; /* Font size */
+  padding-left: 12px; /* Left padding */
 }
 
-.viewmore{
-  padding-left: 25px;
-  padding-top: 20px;
-  padding-bottom: 20px;
+/* View More Button Styles */
+.viewmore {
+  padding-left: 25px; /* Left padding */
+  padding-top: 20px; /* Top padding */
+  padding-bottom: 20px; /* Bottom padding */
 }
 
-.viewmore a{
-  color: #aa4465;
-  text-decoration: none;
+/* View More Link Styles */
+.viewmore a {
+  color: #aa4465; /* Color for the link */
+  text-decoration: none; /* Remove underline */
 }
 
-.animetitle:hover{
-  color: #aa4465;
-  cursor: pointer;
+/* Modal Styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0; /* Align to the left */
+    top: 0; /* Align to the top */
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: none; /* Disable scrolling */
+    background-color: rgb(0, 0, 0); /* Fallback background color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black background with opacity */
+}
+
+/* Modal Text Styles */
+.modtext {
+  color: #aa4465; /* Color for modal text */
+}
+
+/* Modal Content Styles */
+.modal-content {
+    background-color: #d6e3f8; /* Background color */
+    margin: 10% auto; /* Center modal content */
+    padding: 20px; /* Padding inside modal */
+    border: 1px solid #888; /* Border around modal */
+    width: 80%; /* Width relative to screen size */
+    border-radius: 10px; /* Rounded corners */
+    max-height: 500px; /* Maximum height */
+    height: fit-content; /* Adjust height based on content */
+    overflow-y: scroll; /* Enable vertical scroll if needed */
+    color: #211a1d; /* Color for modal text */
+}
+
+/* Close Button Styles */
+.close {
+    color: #aaa; /* Color for close button */
+    float: right; /* Float to the right */
+    font-size: 28px; /* Font size */
+    font-weight: bold; /* Bold text */
+}
+
+/* Hover effect for close button */
+.close:hover,
+.close:focus {
+    color: #211a1d; /* Change color on hover */
+    text-decoration: none; /* Remove underline */
+    cursor: pointer; /* Indicate clickable */
+}
+
+/* Miscellaneous Text Styles */
+.manstxt {
+  color: #211a1d; /* Color for miscellaneous text */
+  font-size: 14px; /* Font size */
+}
+
+/* Anime Details Layout */
+.anime-details {
+  display: flex; /* Use flexbox for alignment */
+}
+
+/* Love Icon Styles */
+.love {
+  color: #aa4465; /* Color for love icon */
+  float: right; /* Float to the right */
+  font-size: 16.5px; /* Font size */
+  font-weight: bold; /* Bold text */
+  margin-top: 8px; /* Space above the love icon */
 }

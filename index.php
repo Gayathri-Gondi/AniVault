@@ -1,13 +1,12 @@
 <?php
-// Enable error reporting
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 // Include the query file to fetch data
-include 'queries.php';
+include 'functions.php';
+$year = date('Y');
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
+
 
 <head>
     <meta charset="utf-8">
@@ -55,35 +54,49 @@ include 'queries.php';
     <!-- Main Carousel Section -->
     <div class="carousel">
         <div class="carousel-container">
-            <div class="carousel-item active">Container 1</div>
-            <div class="carousel-item">Container 2</div>
-            <div class="carousel-item">Container 3</div>
-            <div class="carousel-item">Container 4</div>
-            <div class="carousel-item">Container 5</div>
+           <?php
+$ThisData = fetchAniListData($popseasonnow);
+
+if (isset($ThisData['data']['Page']['media']) && is_array($ThisData['data']['Page']['media'])) {
+    $animeList = $ThisData['data']['Page']['media'];
+
+    // Filter anime list to only include entries with a non-null bannerImage
+    $filteredAnimeList = array_filter($animeList, function($anime) {
+        return !empty($anime['bannerImage']); // Check if bannerImage is not empty
+    });
+
+    // If there are any anime with a valid bannerImage, slice the array
+    if (!empty($filteredAnimeList)) {
+        $Anime = array_slice($filteredAnimeList, 0, 5); // Adjust the number as needed
+        indexcarozdisplay($Anime);
+    } else {
+        echo "<p>No anime with banner images available.</p>";
+    }
+} else {
+    echo "<p>No anime data available.</p>";
+}
+?>
+
+
         </div>
     </div>
+
 
     <!-- Trending Now Section -->
     <div>
         <div class="headtext">TRENDING NOW</div>
         <div class="main-content">
             <div class="owl-carousel owl-theme" id="cl1">
-                <div class="item">
-                    <div class="item-content">1</div>
-                    <div class="item-title">Title 1</div>
-                </div>
-                <div class="item">
-                    <div class="item-content">2</div>
-                    <div class="item-title">Title 2</div>
-                </div>
-                <div class="item">
-                    <div class="item-content">3</div>
-                    <div class="item-title">Title 3</div>
-                </div>
-                <div class="item">
-                    <div class="item-content">4</div>
-                    <div class="item-title">Title 4</div>
-                </div>
+                <?php
+                $TrendinData = fetchAniListData($trendingnow);
+                if (isset($TrendinData['data']['Page']['media']) && is_array($TrendinData['data']['Page']['media'])) {
+                    $animeList = $TrendinData['data']['Page']['media'];
+                    $Anime = array_slice($animeList, 0, 10);
+                    indexhorizdisplay($Anime);
+                } else {
+                    echo "<p>No anime data available.</p>";
+                }
+                ?>
             </div>
             <div class="owl-theme">
                 <div class="owl-controls">
@@ -98,22 +111,16 @@ include 'queries.php';
         <div class="headtext">UPCOMING ANIME</div>
         <div class="main-content">
             <div class="owl-carousel owl-theme" id="cl2">
-                <div class="item">
-                    <div class="item-content">5</div>
-                    <div class="item-title">Title 5</div>
-                </div>
-                <div class="item">
-                    <div class="item-content">6</div>
-                    <div class="item-title">Title 6</div>
-                </div>
-                <div class="item">
-                    <div class="item-content">7</div>
-                    <div class="item-title">Title 7</div>
-                </div>
-                <div class="item">
-                    <div class="item-content">8</div>
-                    <div class="item-title">Title 8</div>
-                </div>
+                <?php
+                $UpcominData = fetchAniListData($upcominganime);
+                if (isset($UpcominData['data']['Page']['media']) && is_array($UpcominData['data']['Page']['media'])) {
+                    $animeList = $UpcominData['data']['Page']['media'];
+                    $Anime = array_slice($animeList, 0, 10);
+                    indexhorizdisplay($Anime);
+                } else {
+                    echo "<p>No anime data available.</p>";
+                }
+                ?>
             </div>
             <div class="owl-theme">
                 <div class="owl-controls">
@@ -131,48 +138,16 @@ include 'queries.php';
                     <div class="animeclass">
                         <div class="headtext">ALL TIME TOP</div>
                     </div>
-                    <div class="animedata">
-                        <div class="animecont">
-                            <div class="animeimg"></div>
-                            <div class="animeinfo" style="align-content: center;">
-                                <div class="animetitle"> One piece</div>
-                                <div class="viewstxt">10,000</div>
-                                <div class="likestxt">793</div>
-                            </div>
-                        </div>
-                        <div class="animecont">
-                            <div class="animeimg"></div>
-                            <div class="animeinfo" style="align-content: center;">
-                                <div class="animetitle"> One piece</div>
-                                <div class="viewstxt">10,000</div>
-                                <div class="likestxt">793</div>
-                            </div>
-                        </div>
-                        <div class="animecont">
-                            <div class="animeimg"></div>
-                            <div class="animeinfo" style="align-content: center;">
-                                <div class="animetitle"> One piece</div>
-                                <div class="viewstxt">10,000</div>
-                                <div class="likestxt">793</div>
-                            </div>
-                        </div>
-                        <div class="animecont">
-                            <div class="animeimg"></div>
-                            <div class="animeinfo" style="align-content: center;">
-                                <div class="animetitle"> One piece</div>
-                                <div class="viewstxt">10,000</div>
-                                <div class="likestxt">793</div>
-                            </div>
-                        </div>
-                        <div class="animecont">
-                            <div class="animeimg"></div>
-                            <div class="animeinfo" style="align-content: center;">
-                                <div class="animetitle"> One piece</div>
-                                <div class="viewstxt">10,000</div>
-                                <div class="likestxt">793</div>
-                            </div>
-                        </div>
-                    </div>
+                    <?php
+                    $popularData = fetchAniListData($popularQuery);
+                    if (isset($popularData['data']['Page']['media']) && is_array($popularData['data']['Page']['media'])) {
+                        $animeList = $popularData['data']['Page']['media'];
+                        $Anime = array_slice($animeList, 0, 5);
+                        indexdisplay($Anime);
+                    } else {
+                        echo "<p>No anime data available.</p>";
+                    }
+                    ?>
                     <div class="viewmore">
                         <a href="#" class="view-more-link">View More...</a>
                     </div>
@@ -181,48 +156,16 @@ include 'queries.php';
                     <div class="animeclass">
                         <div class="headtext">MOST FAVOURITE</div>
                     </div>
-                    <div class="animedata">
-                        <div class="animecont">
-                            <div class="animeimg"></div>
-                            <div class="animeinfo" style="align-content: center;">
-                                <div class="animetitle"> One piece</div>
-                                <div class="viewstxt">10,000</div>
-                                <div class="likestxt">793</div>
-                            </div>
-                        </div>
-                        <div class="animecont">
-                            <div class="animeimg"></div>
-                            <div class="animeinfo" style="align-content: center;">
-                                <div class="animetitle"> One piece</div>
-                                <div class="viewstxt">10,000</div>
-                                <div class="likestxt">793</div>
-                            </div>
-                        </div>
-                        <div class="animecont">
-                            <div class="animeimg"></div>
-                            <div class="animeinfo" style="align-content: center;">
-                                <div class="animetitle"> One piece</div>
-                                <div class="viewstxt">10,000</div>
-                                <div class="likestxt">793</div>
-                            </div>
-                        </div>
-                        <div class="animecont">
-                            <div class="animeimg"></div>
-                            <div class="animeinfo" style="align-content: center;">
-                                <div class="animetitle"> One piece</div>
-                                <div class="viewstxt">10,000</div>
-                                <div class="likestxt">793</div>
-                            </div>
-                        </div>
-                        <div class="animecont">
-                            <div class="animeimg"></div>
-                            <div class="animeinfo" style="align-content: center;">
-                                <div class="animetitle"> One piece</div>
-                                <div class="viewstxt">10,000</div>
-                                <div class="likestxt">793</div>
-                            </div>
-                        </div>
-                    </div>
+                    <?php
+                    $favoritesData = fetchAniListData($favoritesQuery);
+                    if (isset($favoritesData['data']['Page']['media']) && is_array($favoritesData['data']['Page']['media'])) {
+                        $animeList = $favoritesData['data']['Page']['media'];
+                        $Anime = array_slice($animeList, 0, 5);
+                        indexdisplay($Anime);
+                    } else {
+                        echo "<p>No anime data available.</p>";
+                    }
+                    ?>
                     <div class="viewmore">
                         <a href="#" class="view-more-link">View More...</a>
                     </div>
@@ -231,48 +174,16 @@ include 'queries.php';
                     <div class="animeclass">
                         <div class="headtext">RECENTLY COMPLETED</div>
                     </div>
-                    <div class="animedata">
-                        <div class="animecont">
-                            <div class="animeimg"></div>
-                            <div class="animeinfo" style="align-content: center;">
-                                <div class="animetitle"> One piece</div>
-                                <div class="viewstxt">10,000</div>
-                                <div class="likestxt">793</div>
-                            </div>
-                        </div>
-                        <div class="animecont">
-                            <div class="animeimg"></div>
-                            <div class="animeinfo" style="align-content: center;">
-                                <div class="animetitle"> One piece</div>
-                                <div class="viewstxt">10,000</div>
-                                <div class="likestxt">793</div>
-                            </div>
-                        </div>
-                        <div class="animecont">
-                            <div class="animeimg"></div>
-                            <div class="animeinfo" style="align-content: center;">
-                                <div class="animetitle"> One piece</div>
-                                <div class="viewstxt">10,000</div>
-                                <div class="likestxt">793</div>
-                            </div>
-                        </div>
-                        <div class="animecont">
-                            <div class="animeimg"></div>
-                            <div class="animeinfo" style="align-content: center;">
-                                <div class="animetitle"> One piece</div>
-                                <div class="viewstxt">10,000</div>
-                                <div class="likestxt">793</div>
-                            </div>
-                        </div>
-                        <div class="animecont">
-                            <div class="animeimg"></div>
-                            <div class="animeinfo" style="align-content: center;">
-                                <div class="animetitle"> One piece</div>
-                                <div class="viewstxt">10,000</div>
-                                <div class="likestxt">793</div>
-                            </div>
-                        </div>
-                    </div>
+                    <?php
+                    $recentlyCompletedData = fetchAniListData($recentlyCompletedQuery);
+                    if (isset($recentlyCompletedData['data']['Page']['media']) && is_array($recentlyCompletedData['data']['Page']['media'])) {
+                        $animeList = $recentlyCompletedData['data']['Page']['media'];
+                        $Anime = array_slice($animeList, 0, 5);
+                        indexdisplay($Anime);
+                    } else {
+                        echo "<p>No anime data available.</p>";
+                    }
+                    ?>
                     <div class="viewmore">
                         <a href="#" class="view-more-link">View More...</a>
                     </div>
@@ -282,54 +193,96 @@ include 'queries.php';
                         <div class="headtext">ADMINS PICK</div>
                     </div>
                     <div class="animedata">
-                        <div class="animecont">
-                            <div class="animeimg"></div>
-                            <div class="animeinfo" style="align-content: center;">
-                                <div class="animetitle"> One piece</div>
-                                <div class="viewstxt">10,000</div>
-                                <div class="likestxt">793</div>
-                            </div>
-                        </div>
-                        <div class="animecont">
-                            <div class="animeimg"></div>
-                            <div class="animeinfo" style="align-content: center;">
-                                <div class="animetitle"> One piece</div>
-                                <div class="viewstxt">10,000</div>
-                                <div class="likestxt">793</div>
-                            </div>
-                        </div>
-                        <div class="animecont">
-                            <div class="animeimg"></div>
-                            <div class="animeinfo" style="align-content: center;">
-                                <div class="animetitle"> One piece</div>
-                                <div class="viewstxt">10,000</div>
-                                <div class="likestxt">793</div>
-                            </div>
-                        </div>
-                        <div class="animecont">
-                            <div class="animeimg"></div>
-                            <div class="animeinfo" style="align-content: center;">
-                                <div class="animetitle"> One piece</div>
-                                <div class="viewstxt">10,000</div>
-                                <div class="likestxt">793</div>
-                            </div>
-                        </div>
-                        <div class="animecont">
-                            <div class="animeimg"></div>
-                            <div class="animeinfo" style="align-content: center;">
-                                <div class="animetitle"> One piece</div>
-                                <div class="viewstxt">10,000</div>
-                                <div class="likestxt">793</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="viewmore">
-                        <a href="#" class="view-more-link">View More...</a>
+                        <?php
+                        $idquery = getanimeid(21);
+                        $adminpick = fetchAniListData($idquery);
+                        if (isset($adminpick['data']['Page']['media']) && is_array($adminpick['data']['Page']['media'])) {
+                            $animeList = $adminpick['data']['Page']['media'];
+                            $Anime = array_slice($animeList, 0, 5);
+                            indexdisplay($Anime);
+                        } else {
+                            echo "<p>No anime data available.</p>";
+                        }
+                        ?>
+                        <?php
+                        $idquery = getanimeid(114960);
+                        $adminpick = fetchAniListData($idquery);
+                        if (isset($adminpick['data']['Page']['media']) && is_array($adminpick['data']['Page']['media'])) {
+                            $animeList = $adminpick['data']['Page']['media'];
+                            $Anime = array_slice($animeList, 0, 5);
+                            indexdisplay($Anime);
+                        } else {
+                            echo "<p>No anime data available.</p>";
+                        }
+                        ?>
+                        <?php
+                        $idquery = getanimeid(6702);
+                        $adminpick = fetchAniListData($idquery);
+                        if (isset($adminpick['data']['Page']['media']) && is_array($adminpick['data']['Page']['media'])) {
+                            $animeList = $adminpick['data']['Page']['media'];
+                            $Anime = array_slice($animeList, 0, 5);
+                            indexdisplay($Anime);
+                        } else {
+                            echo "<p>No anime data available.</p>";
+                        }
+                        ?>
+                        <?php
+                        $idquery = getanimeid(86355);
+                        $adminpick = fetchAniListData($idquery);
+                        if (isset($adminpick['data']['Page']['media']) && is_array($adminpick['data']['Page']['media'])) {
+                            $animeList = $adminpick['data']['Page']['media'];
+                            $Anime = array_slice($animeList, 0, 5);
+                            indexdisplay($Anime);
+                        } else {
+                            echo "<p>No anime data available.</p>";
+                        }
+                        ?>
+                        <?php
+                        $idquery = getanimeid(118586);
+                        $adminpick = fetchAniListData($idquery);
+                        if (isset($adminpick['data']['Page']['media']) && is_array($adminpick['data']['Page']['media'])) {
+                            $animeList = $adminpick['data']['Page']['media'];
+                            $Anime = array_slice($animeList, 0, 5);
+                            indexdisplay($Anime);
+                        } else {
+                            echo "<p>No anime data available.</p>";
+                        }
+                        ?>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Modal Structure -->
+    <div id="animeModal" class="modal">
+        <div class="modal-content">
+            <div style="display: flex; float: right;">
+                <a class="love" style="color:#aa4465; padding-right:10px"><i class="fa-regular fa-heart"></i></a>
+                <span class="close">&times;</span>
+            </div>
+            <div class="anime-details">
+                <div>
+                    <img id="animeImage" src="" alt="" style="width: 200px; float: left; margin-right: 20px;">
+                    <!-- Move the description div here -->
+                    <div style="clear: both; padding-top: 10px;">
+                        <p class="modtext">English Title: <span class="manstxt" id="animeEnglishTitle"></span></p>
+                        <p class="modtext">Native Title: <span class="manstxt" id="animeNativeTitle"></span></p>
+                        <p class="modtext">Average Score: <span class="manstxt" id="animeScore"></span></p>
+                        <p class="modtext">Favourites: <span class="manstxt" id="animeFavourites"></span></p>
+                    </div>
+                </div>
+                <div>
+                    <h1 class="modtext" id="animeTitle"></h1>
+                    <p class="modtext">Description: </p>
+                    <p class="manstxt" id="animeDescription"></p> <!-- Description Element -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 
     <div class="footer">
         <div class="top">
@@ -349,25 +302,56 @@ include 'queries.php';
     </div>
 
     <script>
-        // Carousel for the first set of containers (manual sliding)
-        let currentIndex = 0;
-        const items = document.querySelectorAll('.carousel-item');
-        const totalItems = items.length;
-        const carouselContainer = document.querySelector('.carousel-container');
+       // Carousel for the first set of containers (manual sliding)
+let currentIndex = 0;
+const items = document.querySelectorAll('.carousel-item');
+const totalItems = items.length;
+const carouselContainer = document.querySelector('.carousel-container');
 
-        // Move the carousel to the specified index
-        function moveToIndex(index) {
-            carouselContainer.style.transform = `translateX(-${index * 100}%)`;
-        }
+// Clone the first and last items for seamless scrolling
+const firstClone = items[0].cloneNode(true);
+const lastClone = items[totalItems - 1].cloneNode(true);
 
-        // Automatic slide function
-        function autoSlide() {
-            currentIndex = (currentIndex + 1) % totalItems;
+carouselContainer.appendChild(firstClone); // Append first item to the end
+carouselContainer.insertBefore(lastClone, items[0]); // Insert last item at the beginning
+
+// Update the item count after cloning
+const updatedTotalItems = totalItems + 2;
+
+// Move the carousel to the specified index
+function moveToIndex(index) {
+    carouselContainer.style.transform = `translateX(-${index * 100}%)`;
+}
+
+// Automatic slide function
+function autoSlide() {
+    currentIndex++;
+    moveToIndex(currentIndex);
+
+    // Reset to the first item when reaching the last clone
+    if (currentIndex >= updatedTotalItems - 1) {
+        setTimeout(() => {
+            currentIndex = 1; // Move to the first real item
+            carouselContainer.style.transition = 'none'; // Disable transition for instant jump
             moveToIndex(currentIndex);
-        }
+        }, 500); // Delay slightly to allow the transition to complete
+    }
 
-        // Set interval for automatic sliding every 3 seconds
-        setInterval(autoSlide, 3000);
+    // Reset transition property after the jump
+    carouselContainer.style.transition = 'transform 0.5s ease-in-out';
+}
+
+// Set interval for automatic sliding every 3 seconds
+setInterval(autoSlide, 3000);
+
+// Optional: Allow manual control (e.g., by clicking)
+document.querySelectorAll('.carousel-title').forEach((title, index) => {
+    title.addEventListener('click', () => {
+        currentIndex = index + 1; // Adjust for clones
+        moveToIndex(currentIndex);
+    });
+});
+
     </script>
 
     <script>
@@ -449,6 +433,86 @@ include 'queries.php';
             });
         });
     </script>
+
+    <script>
+        $(document).ready(function () {
+            // Function to show modal
+            function showModal(animeId) {
+                $.ajax({
+                    url: 'https://graphql.anilist.co',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        query: `
+                    {
+                        Media(id: ${animeId}) {
+                            id
+                            title {
+                                romaji
+                                english
+                                native
+                            }
+                            coverImage {
+                                extraLarge
+                            }
+                            averageScore
+                            favourites
+                            description
+                        }
+                    }`
+                    }),
+                    success: function (response) {
+                        const anime = response.data.Media;
+                        // Populate the modal with data
+                        $('#animeTitle').text(anime.title.romaji);
+                        $('#animeEnglishTitle').text(anime.title.english || 'N/A');
+                        $('#animeNativeTitle').text(anime.title.native || 'N/A');
+                        $('#animeScore').text(anime.averageScore || 'N/A');
+                        $('#animeFavourites').text(anime.favourites || 'N/A');
+                        $('#animeImage').attr('src', anime.coverImage.extraLarge || 'default.jpg');
+
+                        // Display the description as it is
+                        $('#animeDescription').html(anime.description || 'No description available.');
+
+                        // Show the modal
+                        $('#animeModal').css('display', 'block');
+                    },
+                    error: function (error) {
+                        console.error('Error fetching anime details:', error);
+                    }
+                });
+            }
+
+            // When the user clicks on an anime item
+            $('.animecont').on('click', function () {
+                const animeId = $(this).data('id'); // Get the ID from data attribute
+                showModal(animeId);
+            });
+
+            $('.item').on('click', function () {
+                const animeId = $(this).data('id'); // Get the ID from data attribute
+                showModal(animeId);
+            });
+
+            $('.carousel-item').on('click', function () {
+                const animeId = $(this).data('id'); // Get the ID from data attribute
+                showModal(animeId);
+            });
+
+            // When the user clicks on <span> (x), close the modal
+            $('.close').on('click', function () {
+                $('#animeModal').css('display', 'none');
+            });
+
+            // When the user clicks anywhere outside of the modal, close it
+            $(window).on('click', function (event) {
+                if (event.target.id === 'animeModal') {
+                    $('#animeModal').css('display', 'none');
+                }
+            });
+        });
+    </script>
+
 </body>
 
 </html>
