@@ -71,9 +71,11 @@ $popularQuery = '
             coverImage {
                 extraLarge
             }
+            format
             bannerImage
             averageScore
             favourites
+            seasonYear
         }
     }
 }';
@@ -89,9 +91,11 @@ $topRatedQuery = '
             coverImage {
                 extraLarge
             }
+            format
             bannerImage
             averageScore
             favourites
+            seasonYear
         }
     }
 }';
@@ -107,9 +111,11 @@ $favoritesQuery = '
             coverImage {
                 extraLarge
             }
+            format
             bannerImage
             averageScore
             favourites
+            seasonYear
         }
     }
 }';
@@ -126,11 +132,13 @@ $recentlyCompletedQuery = '
       coverImage {
         extraLarge
       }
+            format
       bannerImage
       averageScore
       favourites
       episodes
       description
+      seasonYear
       startDate {
         year
         month
@@ -158,7 +166,9 @@ $trendingnow = '
             coverImage {
                 extraLarge
             }
+            format
             bannerImage
+            seasonYear
             averageScore
             favourites
             trending
@@ -179,10 +189,12 @@ $upcominganime = '
             coverImage {
                 extraLarge
             }
+            format
             bannerImage
             averageScore
             favourites
             trending
+            seasonYear
         }
     }
 }';
@@ -200,10 +212,12 @@ $popseasonnow = '
             coverImage {
                 extraLarge
             }
+            format
             bannerImage
             averageScore
             favourites
             trending
+            seasonYear
         }
     }
 }';

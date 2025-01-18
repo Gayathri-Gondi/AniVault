@@ -40,7 +40,7 @@ $year = date('Y');
     <nav class="nav">
         <!-- Left Container for Logo -->
         <div class="leftcontainer">
-            <img class="logoimg" src="logo.png" alt="Logo"> <!-- Logo image -->
+            <a href="index.php"> <img class="logoimg" src="logo.png" alt="Logo"> <!-- Logo image --></a>
         </div>
         <!-- Right Container for Navigation Links -->
         <div class="rightcontainer">
@@ -54,28 +54,28 @@ $year = date('Y');
     <!-- Main Carousel Section -->
     <div class="carousel">
         <div class="carousel-container">
-           <?php
-$ThisData = fetchAniListData($popseasonnow);
+            <?php
+            $ThisData = fetchAniListData($popseasonnow);
 
-if (isset($ThisData['data']['Page']['media']) && is_array($ThisData['data']['Page']['media'])) {
-    $animeList = $ThisData['data']['Page']['media'];
+            if (isset($ThisData['data']['Page']['media']) && is_array($ThisData['data']['Page']['media'])) {
+                $animeList = $ThisData['data']['Page']['media'];
 
-    // Filter anime list to only include entries with a non-null bannerImage
-    $filteredAnimeList = array_filter($animeList, function($anime) {
-        return !empty($anime['bannerImage']); // Check if bannerImage is not empty
-    });
+                // Filter anime list to only include entries with a non-null bannerImage
+                $filteredAnimeList = array_filter($animeList, function ($anime) {
+                    return !empty($anime['bannerImage']); // Check if bannerImage is not empty
+                });
 
-    // If there are any anime with a valid bannerImage, slice the array
-    if (!empty($filteredAnimeList)) {
-        $Anime = array_slice($filteredAnimeList, 0, 5); // Adjust the number as needed
-        indexcarozdisplay($Anime);
-    } else {
-        echo "<p>No anime with banner images available.</p>";
-    }
-} else {
-    echo "<p>No anime data available.</p>";
-}
-?>
+                // If there are any anime with a valid bannerImage, slice the array
+                if (!empty($filteredAnimeList)) {
+                    $Anime = array_slice($filteredAnimeList, 0, 5); // Adjust the number as needed
+                    indexcarozdisplay($Anime);
+                } else {
+                    echo "<p>No anime with banner images available.</p>";
+                }
+            } else {
+                echo "<p>No anime data available.</p>";
+            }
+            ?>
 
 
         </div>
@@ -148,8 +148,11 @@ if (isset($ThisData['data']['Page']['media']) && is_array($ThisData['data']['Pag
                         echo "<p>No anime data available.</p>";
                     }
                     ?>
+                    <?php
+                    $url = "search.php?value=" . urlencode($popularQuery);
+                    ?>
                     <div class="viewmore">
-                        <a href="#" class="view-more-link">View More...</a>
+                        <a href="<?php echo $url ?>" class="view-more-link">View More...</a>
                     </div>
                 </div>
                 <div class="cont">
@@ -166,8 +169,11 @@ if (isset($ThisData['data']['Page']['media']) && is_array($ThisData['data']['Pag
                         echo "<p>No anime data available.</p>";
                     }
                     ?>
+                    <?php
+                    $url = "search.php?value=" . urlencode($favoritesQuery);
+                    ?>
                     <div class="viewmore">
-                        <a href="#" class="view-more-link">View More...</a>
+                        <a href="<?php echo $url ?>" class="view-more-link">View More...</a>
                     </div>
                 </div>
                 <div class="cont">
@@ -184,8 +190,11 @@ if (isset($ThisData['data']['Page']['media']) && is_array($ThisData['data']['Pag
                         echo "<p>No anime data available.</p>";
                     }
                     ?>
+                    <?php
+                    $url = "search.php?value=" . urlencode($recentlyCompletedQuery);
+                    ?>
                     <div class="viewmore">
-                        <a href="#" class="view-more-link">View More...</a>
+                        <a href="<?php echo $url ?>" class="view-more-link">View More...</a>
                     </div>
                 </div>
                 <div class="cont">
@@ -205,7 +214,7 @@ if (isset($ThisData['data']['Page']['media']) && is_array($ThisData['data']['Pag
                         }
                         ?>
                         <?php
-                        $idquery = getanimeid(114960);
+                        $idquery = getanimeid(151801);
                         $adminpick = fetchAniListData($idquery);
                         if (isset($adminpick['data']['Page']['media']) && is_array($adminpick['data']['Page']['media'])) {
                             $animeList = $adminpick['data']['Page']['media'];
@@ -227,7 +236,7 @@ if (isset($ThisData['data']['Page']['media']) && is_array($ThisData['data']['Pag
                         }
                         ?>
                         <?php
-                        $idquery = getanimeid(86355);
+                        $idquery = getanimeid(101280);
                         $adminpick = fetchAniListData($idquery);
                         if (isset($adminpick['data']['Page']['media']) && is_array($adminpick['data']['Page']['media'])) {
                             $animeList = $adminpick['data']['Page']['media'];
@@ -238,7 +247,7 @@ if (isset($ThisData['data']['Page']['media']) && is_array($ThisData['data']['Pag
                         }
                         ?>
                         <?php
-                        $idquery = getanimeid(118586);
+                        $idquery = getanimeid(154587);
                         $adminpick = fetchAniListData($idquery);
                         if (isset($adminpick['data']['Page']['media']) && is_array($adminpick['data']['Page']['media'])) {
                             $animeList = $adminpick['data']['Page']['media'];
@@ -302,55 +311,55 @@ if (isset($ThisData['data']['Page']['media']) && is_array($ThisData['data']['Pag
     </div>
 
     <script>
-       // Carousel for the first set of containers (manual sliding)
-let currentIndex = 0;
-const items = document.querySelectorAll('.carousel-item');
-const totalItems = items.length;
-const carouselContainer = document.querySelector('.carousel-container');
+        // Carousel for the first set of containers (manual sliding)
+        let currentIndex = 0;
+        const items = document.querySelectorAll('.carousel-item');
+        const totalItems = items.length;
+        const carouselContainer = document.querySelector('.carousel-container');
 
-// Clone the first and last items for seamless scrolling
-const firstClone = items[0].cloneNode(true);
-const lastClone = items[totalItems - 1].cloneNode(true);
+        // Clone the first and last items for seamless scrolling
+        const firstClone = items[0].cloneNode(true);
+        const lastClone = items[totalItems - 1].cloneNode(true);
 
-carouselContainer.appendChild(firstClone); // Append first item to the end
-carouselContainer.insertBefore(lastClone, items[0]); // Insert last item at the beginning
+        carouselContainer.appendChild(firstClone); // Append first item to the end
+        carouselContainer.insertBefore(lastClone, items[0]); // Insert last item at the beginning
 
-// Update the item count after cloning
-const updatedTotalItems = totalItems + 2;
+        // Update the item count after cloning
+        const updatedTotalItems = totalItems + 2;
 
-// Move the carousel to the specified index
-function moveToIndex(index) {
-    carouselContainer.style.transform = `translateX(-${index * 100}%)`;
-}
+        // Move the carousel to the specified index
+        function moveToIndex(index) {
+            carouselContainer.style.transform = `translateX(-${index * 100}%)`;
+        }
 
-// Automatic slide function
-function autoSlide() {
-    currentIndex++;
-    moveToIndex(currentIndex);
-
-    // Reset to the first item when reaching the last clone
-    if (currentIndex >= updatedTotalItems - 1) {
-        setTimeout(() => {
-            currentIndex = 1; // Move to the first real item
-            carouselContainer.style.transition = 'none'; // Disable transition for instant jump
+        // Automatic slide function
+        function autoSlide() {
+            currentIndex++;
             moveToIndex(currentIndex);
-        }, 500); // Delay slightly to allow the transition to complete
-    }
 
-    // Reset transition property after the jump
-    carouselContainer.style.transition = 'transform 0.5s ease-in-out';
-}
+            // Reset to the first item when reaching the last clone
+            if (currentIndex >= updatedTotalItems - 1) {
+                setTimeout(() => {
+                    currentIndex = 1; // Move to the first real item
+                    carouselContainer.style.transition = 'none'; // Disable transition for instant jump
+                    moveToIndex(currentIndex);
+                }, 500); // Delay slightly to allow the transition to complete
+            }
 
-// Set interval for automatic sliding every 3 seconds
-setInterval(autoSlide, 3000);
+            // Reset transition property after the jump
+            carouselContainer.style.transition = 'transform 0.5s ease-in-out';
+        }
 
-// Optional: Allow manual control (e.g., by clicking)
-document.querySelectorAll('.carousel-title').forEach((title, index) => {
-    title.addEventListener('click', () => {
-        currentIndex = index + 1; // Adjust for clones
-        moveToIndex(currentIndex);
-    });
-});
+        // Set interval for automatic sliding every 3 seconds
+        setInterval(autoSlide, 3000);
+
+        // Optional: Allow manual control (e.g., by clicking)
+        document.querySelectorAll('.carousel-title').forEach((title, index) => {
+            title.addEventListener('click', () => {
+                currentIndex = index + 1; // Adjust for clones
+                moveToIndex(currentIndex);
+            });
+        });
 
     </script>
 

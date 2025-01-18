@@ -1,10 +1,10 @@
 body {
-  background-color: #d6e3f8;
+  background-color: #e5ecf8;
 }
 
 .nav {
   background-color: #211a1d;
-  color: #d6e3f8;
+  color: #e5ecf8;
 }
 
 .leftcontainer {
@@ -18,7 +18,7 @@ body {
 }
 
 .rightcontainer a {
-  color: #d6e3f8;
+  color: #e5ecf8;
 }
 
 .animetitle {
@@ -40,7 +40,7 @@ body {
 }
 
 .mixcont {
-  background-color: #d6e3f8;
+  background-color: #e5ecf8;
   height: fit-content;
   width: 100%; /* Full width of the parent */
   border-radius: 20px;
@@ -60,27 +60,27 @@ body {
   padding-top: 30px;
 }
 
-.hline{
+.hline {
   width: 90%; /* Set the width to 90% */
-    border: 0; /* Remove default border */
-    border-top: 1px solid #ccc; /* Add a solid line with color */
-    margin: 20px auto; /* Center the line horizontally with some margin */
+  border: 0; /* Remove default border */
+  border-top: 1px solid #ccc; /* Add a solid line with color */
+  margin: 20px auto; /* Center the line horizontally with some margin */
 }
 
-.footer .bottom{
+.footer .bottom {
   margin-left: 75px;
   display: inline-flex;
 }
 
-.wbtitle{
-  color: #d6e3f8;
+.wbtitle {
+  color: #e5ecf8;
   padding-left: 20px;
   padding-right: 20px;
 }
 
-.vline{
+.vline {
   width: 2px; /* Width of the vertical line */
-    height: 30px; /* Height of the vertical line */
-    background-color: #ccc; /* Color of the line */
-    margin:  auto; /* Center the line vertically with some margin */
+  height: 30px; /* Height of the vertical line */
+  background-color: #ccc; /* Color of the line */
+  margin: auto; /* Center the line vertically with some margin */
 }

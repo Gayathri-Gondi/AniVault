@@ -1,10 +1,10 @@
 body {
-  background-color: #211A1D;
+  background-color: #211a1d;
 }
 
 .nav {
-  background-color: #d6e3f8;
-  color: #211A1D;
+  background-color: #e5ecf8;
+  color: #211a1d;
 }
 
 .leftcontainer {
@@ -18,11 +18,11 @@ body {
 }
 
 .rightcontainer a {
-  color: #211A1D;
+  color: #211a1d;
 }
 
 .animetitle {
-  color: #d6e3f8;
+  color: #e5ecf8;
   padding-left: 12px;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -32,7 +32,7 @@ body {
 
 .item-title {
   margin-top: 10px; /* Space between item content and title */
-  color: #d6e3f8; /* Change text color for better visibility */
+  color: #e5ecf8; /* Change text color for better visibility */
   overflow: hidden; /* Hide overflow text */
   text-overflow: ellipsis; /* Add ellipsis for overflow text */
   white-space: nowrap; /* Prevent text from wrapping to the next line */
@@ -40,7 +40,7 @@ body {
 }
 
 .mixcont {
-  background-color: #211A1D;
+  background-color: #211a1d;
   height: fit-content;
   width: 100%; /* Full width of the parent */
   border-radius: 20px;

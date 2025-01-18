@@ -31,15 +31,16 @@ function indexdisplay($animeList)
         $title = $anime['title']['romaji'] ?? 'Unknown Title';
         $coverImage = $anime['coverImage']['extraLarge'] ?? 'default.jpg';
         $averageScore = $anime['averageScore'] ?? 'N/A';
-        $favourites = $anime['favourites'] ?? 0;
+        //$episodes = $anime['episodes'] ?? $anime['nextAiringEpisode']['episodes'] ?? 0;
+        $year = $anime['seasonYear'];
+        $type = $anime['format'];
         $id = $anime['id'] ?? 0;
 
         echo '<div class="animecont" data-id="' . intval($id) . '">
         <img class="animeimg" src="' . htmlspecialchars($coverImage) . '" alt="' . htmlspecialchars($title) . '">
         <div class="animeinfo" style="align-content: center;">
             <div class="animetitle">' . htmlspecialchars($title) . '</div>
-            <div class="viewstxt">' . htmlspecialchars($favourites) . '</div>
-            <div class="likestxt">' . htmlspecialchars($averageScore) . '</div>
+            <div class="tptxt"> ' . htmlspecialchars($year) . '  <span class="dot"></span>  ' . htmlspecialchars($type) . '</div>
         </div>
     </div>';
     }
@@ -59,6 +60,8 @@ Page {
             coverImage {
                 extraLarge
             }
+            format
+            seasonYear
             averageScore
             favourites
         }
@@ -105,4 +108,53 @@ function indexcarozdisplay($animeList)
             </div>    
         ';
     }
+}
+
+function searchdisplay($animeList)
+{
+    echo '
+<div class="searchdata">';
+    foreach ($animeList as $anime) {
+        $title = $anime['title']['romaji'] ?? 'Unknown Title';
+        $coverImage = $anime['coverImage']['extraLarge'] ?? 'default.jpg';
+        $averageScore = $anime['averageScore'] ?? 'N/A';
+        $year = $anime['seasonYear'];
+        $type = $anime['format'];
+        $id = $anime['id'] ?? 0;
+
+        echo '<div class="searchcont item" data-id="' . intval($id) . '">
+        <img class="animeimg" src="' . htmlspecialchars($coverImage) . '" alt="' . htmlspecialchars($title) . '">
+        <div class="animeinfo" style="align-content: center;">
+            <div class="animetitle">' . htmlspecialchars($title) . '</div>
+            <div class="tptxt"> ' . htmlspecialchars($year) . '  <span class="dot"></span>  ' . htmlspecialchars($type) . '</div>
+        </div>
+    </div>';
+    }
+    echo '</div>';
+}
+
+function getAnimeByName($Aname)
+{
+    $getbyname = '
+{
+Page {
+query Media($search: String, $format: MediaFormat) {
+  media(search: ' . intval($Aname) . ') {
+            id
+            title {
+                romaji
+            }
+            coverImage {
+                extraLarge
+            }
+            format
+            seasonYear
+            averageScore
+            favourites
+        }
+    }
+}
+}';
+
+    return $getbyname;
 }
